@@ -9,23 +9,24 @@ import java.util.List;
 
 @Service
 public class SpringTransactionalMethodSelfInvocations {
-
+    List<String> list = List.of("John", "William", "Richard");
 	private final UserRepository userRepository;
 
 	public SpringTransactionalMethodSelfInvocations(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 
-	public void addUsers() {
-
-		var list = List.of("John", "William", "Richard");
-
+	public void addUsers1() {
 		// error is shown
         for (String name : list) {
             addUser(name);
         }
+	}
+	public void addUsers2() {
 		// error is shown
         list.forEach(name -> addUser(name));
+	}
+	public void addUsers3() {
 		// error is not shown
 		list.forEach(this::addUser);
 	}
